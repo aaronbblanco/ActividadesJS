@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Ejercicio 8 - Votaciones en gráfico</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+      .fixed-button {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Votaciones</h1>
+      <!-- *** -->
+      <div class="container">
+        <button type="button" class="btn btn-primary" onclick="vote(0)">Socialistas</button>
+        <button type="button" class="btn btn-primary" onclick="vote(1)">Liberales</button>
+        <button type="button" class="btn btn-primary" onclick="vote(2)">Animalistas</button>
+        <button type="button" class="btn btn-primary" onclick="vote(3)">Centristas</button>
+        <button type="button" class="btn btn-primary" onclick="vote(4)">Ecologistas</button>
+        <button type="button" class="btn btn-primary" onclick="reset()">Reset</button>
+      </div>
+      <!-- *** -->
+      <div>
+        <canvas id="myCanvas"></canvas>
+      </div>
+
+      <script>
+        var ctx = document.getElementById("myCanvas");
+        var votos = [0, 0, 0, 0, 0];
+        
+        const data = {
+          labels: ['Socialistas', 'Liberales', 'Animalistas', 'Centristas', 'Ecologistas'],
+          datasets : [{
+            data: votos
+          }],
+        };
+        const config = {
+          type : "pie",
+          data: data,
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Votaciones'
+              }
+            }
+          }
+        }
+        
+        var chart = new Chart(ctx,config);
+        
+        function vote(partido) {
+          votos[partido]++;
+          chart.update();
+        }
+        
+        function reset() {
+          votos = [0, 0, 0, 0, 0];
+          chart.data.datasets[0].data = votos;
+          chart.update();
+        }
+
+      </script>
+    </div>
+    <button class="btn btn-primary fixed-button" onclick="location.href='../index.html'">Volver</button>
+  </body>
+</html>
